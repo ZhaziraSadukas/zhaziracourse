@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Театрға брондау</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f3e8;
+        }
+
+        header {
+            text-align: center;
+            background-color: #6d4c41;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #6d4c41;
+        }
+
+        .details {
+            margin: 20px 0;
+        }
+
+        .seat-selection {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .seat {
+            padding: 10px;
+            background-color: #8d6e63;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .seat:hover {
+            transform: scale(1.1);
+            background-color: #6d4c41;
+        }
+
+        .seat.selected {
+            background-color: #ff5722;
+        }
+
+        .summary, .user-details {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #8d6e63;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #6d4c41;
+        }
+
+        .price {
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin: 10px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #6d4c41;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Театрға брондау</h1>
+    </header>
+
+    <div class="container">
+        <h2>Спектакль: <span id="performance-name">...</span></h2>
+
+        <!-- Күн мен уақыт таңдау -->
+        <div class="details">
+            <label for="date">Күнді таңдаңыз:</label>
+            <input type="date" id="date" min="" required>
+            <br><br>
+            <label for="time">Уақытты таңдаңыз:</label>
+            <select id="time">
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+            </select>
+        </div>
+
+        <!-- Орын таңдау -->
+        <h3>Орынды таңдаңыз:</h3>
+        <div class="seat-selection">
+            <!-- 50 орын үлгісі -->
+        </div>
+
+        <!-- Пайдаланушының мәліметтері -->
+        <div class="user-details">
+            <h3>Сіздің мәліметтеріңіз:</h3>
+            <div class="form-group">
+                <label for="name">Аты-жөніңіз:</label>
+                <input type="text" id="name" placeholder="Атыңызды енгізіңіз" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон нөмірі:</label>
+                <input type="text" id="phone" placeholder="Телефон нөміріңізді енгізіңіз" required>
+            </div>
+        </div>
+
+        <!-- Қорытынды -->
+        <div class="summary">
+            <p>Таңдалған орындар: <span id="selected-seats">Ештеңе таңдалған жоқ</span></p>
+            <p>Бағасы: <span class="price" id="total-price">0</span> тг</p>
+            <div class="btn" onclick="completeBooking()">Брондау</div>
+        </div>
+    </div>
+
+    <script>
+        // URL параметрлерін оқу
+        const urlParams = new URLSearchParams(window.location.search);
+        const performanceName = urlParams.get('performance') || 'Белгісіз';
+
+        document.getElementById('performance-name').textContent = performanceName;
+
+        // Бүгінгі күнді есептеу
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD форматында
+        document.getElementById('date').min = formattedDate;
+
+        // Баға мен орындар аймағын анықтау
+        const seatPrices = {
+            vip: 10000,
+            standard: 5000,
+            gallery: 3000
+        };
+
+        // Орындар жасау
+        const seatContainer = document.querySelector('.seat-selection');
+        for (let i = 1; i <= 50; i++) {
+            const seat = document.createElement('div');
+            seat.classList.add('seat');
+
+            // Әр аймаққа сәйкес бағаны орнату
+            if (i <= 10) {
+                seat.textContent = 'VIP ' + i;
+                seat.dataset.price = seatPrices.vip;
+            } else if (i <= 30) {
+                seat.textContent = 'STD ' + i;
+                seat.dataset.price = seatPrices.standard;
+            } else {
+                seat.textContent = 'GAL ' + i;
+                seat.dataset.price = seatPrices.gallery;
+            }
+
+            seat.addEventListener('click', () => selectSeat(seat));
+            seatContainer.appendChild(seat);
+        }
+
+        const selectedSeats = [];
+        const selectedSeatsElement = document.getElementById('selected-seats');
+        const totalPriceElement = document.getElementById('total-price');
+
+        // Орын таңдау
+        function selectSeat(seat) {
+            const seatNumber = seat.textContent;
+            const price = parseInt(seat.dataset.price, 10);
+
+            if (seat.classList.contains('selected')) {
+                seat.classList.remove('selected');
+                const index = selectedSeats.findIndex(s => s.seat === seatNumber);
+                selectedSeats.splice(index, 1);
+            } else {
+                seat.classList.add('selected');
+                selectedSeats.push({ seat: seatNumber, price });
+            }
+
+            updateSummary();
+        }
+
+        // Қорытынды жаңарту
+        function updateSummary() {
+            const seatNames = selectedSeats.map(s => s.seat).join(', ');
+            const totalPrice = selectedSeats.reduce((sum, s) => sum + s.price, 0);
+
+            selectedSeatsElement.textContent = seatNames || 'Ештеңе таңдалған жоқ';
+            totalPriceElement.textContent = totalPrice;
+        }
+
+        // Брондау аяқтау
+        function completeBooking() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            if (selectedSeats.length === 0) {
+                alert('Алдымен орын таңдаңыз!');
+                return;
+            }
+
+            if (!name || !phone) {
+                alert('Өз мәліметтеріңізді толтырыңыз!');
+                return;
+            }
+
+            alert(`Сіз ${selectedSeats.length} орын таңдадыңыз.\nАты-жөніңіз: ${name}\nТелефон: ${phone}\nБарлығы: ${totalPriceElement.textContent} тг.`);
+        }
+    </script>
+    
+</body>
+</html>
+

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сәдуақас Театр</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eae4d3; /* Жұмсақ сарғыш */
+            color: #444;
+            line-height: 1.6;
+        }
+
+        header {
+            background: url('Gal\\img\\theater.jpeg') no-repeat center center/cover;
+            color: #fff;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        header p {
+            font-size: 1.5rem;
+            margin-top: 15px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #8a6241;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgb(255, 254, 254);
+        }
+
+        nav a {
+            margin: 0 20px;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            color: #fff;
+            text-decoration: none;
+            background-color: #a46c54;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #6b4230;
+            transform: scale(1.1);
+        }
+
+        section {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: 2.8rem;
+            color: #8a5741;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .performance-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .performance-button {
+            width: 250px;
+            padding: 20px;
+            text-align: center;
+            background-color: #a46c54;
+            color: #fff;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .performance-button img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .performance-button p {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .performance-button:hover {
+            background-color: #6b4230;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background-color: #8a5741;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="font-size: 4rem; font-weight: bold; color: #fffcfc; text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.4); letter-spacing: 2px; margin: 0;">
+            Сәдуақас театры
+        </h1>
+        <p style="font-size: 1.6rem; color: #ffffff; margin-top: 15px; text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.3);">
+            Сахна шеберлері мен өнер әлемі
+        </p>
+    </header>
+    
+
+    <nav>
+        <a href="#main">Басты бет</a>
+        <a href="#about">Театр туралы</a>
+        <a href="#performances">Қойылымдар</a>
+        <a href="#contacts">Байланыс</a>
+    </nav>
+
+    <section id="main">
+        <h2>Сәдуақас театрына қош келдіңіз</h2>
+        <p>Біздің театр - сахналық өнер мен ұлттық дәстүрлердің тоғысы. Біз көрермендерге ұмытылмас қойылымдар ұсынамыз.</p>
+    </section>
+
+    <section id="performances">
+        <h2>Қойылымдар</h2>
+        <div class="performance-buttons">
+            <div class="performance-button" onclick="window.location.href='booking.html?performance=Абай+жолы'">
+                <img src="Gal//img//abaijol.jpg" alt="Абай жолы">
+                <p>«Абай жолы»</p>
+            </div>
+            <div class="performance-button" onclick="window.location.href='booking.html?performance=Қыз+Жібек'">
+                <img src="Gal//img//kuzzhibek.jpg" alt="Қыз Жібек">
+                <p>«Қыз Жібек»</p>
+            </div>
+            <div class="performance-button" onclick="window.location.href='booking.html?performance=Қарагөз'">
+                <img src="Gal//img//karagoz.jpg" alt="Қарагөз">
+                <p>«Қарагөз»</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>Театр тарихы</h2>
+        <p>Сәдуақас атындағы театр 2024 жылы негізі қаланған. Ол ұлттық өнердің символы болып табылады.</p>
+    </section>
+
+    <section id="contacts">
+        <h2>Байланыс</h2>
+        <p>Мекен-жайы: Астана қаласы., Арганат көшесі, 7</p>
+        <p>Телефон: +7 (777) 620-42-15</p>
+        <p>Email: info-theatre.kz</p>
+    </section>
+
+    <footer>
+        <p>©️ 2024 Сәдуақас театры. Барлық құқықтар қорғалған.</p>
+    </footer>
+
+</body> 
+</html>
